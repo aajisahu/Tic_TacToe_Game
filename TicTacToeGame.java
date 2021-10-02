@@ -3,86 +3,81 @@ import java.util.*;
 public class TicTacToeGame {
 
 	static char[] board = new char[10];
-    private static char cross = 'X';
-    private static char zero = 'O';
-    private static char player;
-    private static char computer;
+	private static char cross = 'X';
+	private static char circle = 'O';
+	private static char playerSymbol;
+	private static char computerSymbol;
+	private static int toss = 0;
+	private static int turn = 0;
+
+	   
 
 
-    public static char[] creatingBoard() {
+	public static char[] creatingBoard() {
+		for (int i = 1; i < board.length; i++) {
+			board[i] = ' ';
+		}
+		return board;
+	}
 
-        for (int i = 1; i < board.length; i++) {
-            board[i] = ' ';
-        }
-        return board;
+	private static void allowPlayerToChoose() {
+		System.out.println("Enter the symbol X or O you want to choose");
+		Scanner sc = new Scanner(System.in);
+		String input = sc.nextLine();
+		playerSymbol = input.charAt(0);
+		if (playerSymbol == cross) {
+			playerSymbol = cross;
+			computerSymbol = circle;
+			System.out.println("player symbol is : " + playerSymbol);
 
-    }
+		} else if (playerSymbol == circle) {
+			playerSymbol = circle;
+			computerSymbol = cross;
+			System.out.println("player symbol is : " + playerSymbol);
 
-    private static void allowPlayerToChoose() {
-        System.out.println("Enter X or O you want to choose");//here we are checking the position if free then user can move
-        Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
-        player = input.charAt(0);
+		} else {
+			System.out.println("Invalid input");
+		}
+	}
 
-        if (player == cross) {
-            player = cross;
-            computer = zero;
-            System.out.println("player symbol : " + player);
 
-        } else if (player == zero) {
-            player = zero;
-            computer = cross;
-            System.out.println("player symbol : " + player);
+	public static void showBoard() {
+		System.out.println(" board looks like :");
+		System.out.println("");
+		System.out.println("   " + board[1] + "   " + "|" + "   " + board[2] + "   " + "|" + "   " + board[3] + "   ");
+		System.out.println("  -------------------");
+		System.out.println("   " + board[4] + "   " + "|" + "   " + board[5] + "   " + "|" + "   " + board[6] + "   ");
+		System.out.println("  -------------------");
+		System.out.println("   " + board[7] + "   " + "|" + "   " + board[8] + "   " + "|" + "   " + board[9] + "   ");
+	}
 
-        } else {
-            System.out.println("Invalid Character");
-        }
-
-    }
-
-    public static void showBoard() {
-        System.out.println("Unassigned board  :");
-        System.out.println("");
-        System.out.println("   "+board[1]+"   " + "|" +"   "+board[2]+ "   " + "|" +"   "+board[3]+ "   ");
-        System.out.println("  -------------------");
-        System.out.println("   "+board[4]+"   " + "|" +"   "+board[5]+ "   " + "|" +"   "+board[6]+ "   ");
-        System.out.println("  -------------------");
-        System.out.println("   "+board[7]+"   " + "|" +"   "+board[8]+ "   " + "|" +"   "+board[9]+ "   ");
-
-    }
-    
-    public static void userMove()
-    {
-        System.out.println("Enter between(1-9) where you want to make a move ");
-        Scanner sc = new Scanner(System.in);
-        int position = sc.nextInt();
-        if(position>=1 && position <=9)
-        {
-            if(board[position]==' ') //here we are checking the position if free then computer can move
-            {
-                board[position] = player;
-                showBoard();
-            }
-            else
-            {
-                System.out.println("Invalid move, Position is not Empty");
-            }
-        }
-        else
-        {
-            System.out.println("Invalid Position");
-
-        }
-    }
-    
-    public static void computerMove() {
+	public static void userMove() {
+		System.out.println("Enter the empty position(between 1-9) where you wants to make the move ");
+		Scanner sc = new Scanner(System.in);
+		int position = sc.nextInt();
+		if (position >= 1 && position <= 9)
+		{
+			if (board[position] == ' ') {
+				System.out.println("position  : " + position + " is empty");
+				board[position] = playerSymbol;
+				showBoard();
+			} else {
+				System.out.println("Invalid move, position is not empty");
+			}
+		} else {
+			System.out.println("You entered a invalid position");
+		}
+		turn = 1;
+		System.out.println("Computer's turn");
+	}
+	public static void computerMove() {
 		Random random = new Random();
 		int compPlay = random.nextInt(10);   
 		if (compPlay >= 1 && compPlay <= 9 && board[compPlay] == ' '  )
 		{
 			if (board[compPlay] == ' ') {
 				
-				board[compPlay] = zero;
+				board[compPlay] = circle;
 				showBoard();
 			} else {
 				System.out.println("Invalid move, position is not empty");
@@ -90,10 +85,25 @@ public class TicTacToeGame {
 		} else {
 			computerMove();
 		}
+		turn = 0;
 		System.out.println("Player's turn");
 
 	}
-    
+
+
+	public static int doToss()
+	{
+		int tossResult = (int) Math.floor(Math.random() * 10) % 2;
+		if(tossResult == 0)
+		{
+			System.out.println("User-Player plays first");
+		}
+		else
+		{
+			System.out.println("Computer plays first");
+		}
+		return tossResult;
+	}
 
     public static void main(String args[]) {
 
@@ -101,7 +111,9 @@ public class TicTacToeGame {
         board = creatingBoard();
         allowPlayerToChoose();
         showBoard();
+        doToss();
         userMove();
         computerMove();
+        
     }
 }
