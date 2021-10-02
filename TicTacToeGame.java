@@ -103,17 +103,95 @@ public class TicTacToeGame {
 			System.out.println("Computer plays first");
 		}
 		return tossResult;
+		
 	}
 
-    public static void main(String args[]) {
 
-        System.out.println("Welcome to TicTacToe Board Game");
-        board = creatingBoard();
-        allowPlayerToChoose();
-        showBoard();
-        doToss();
-        userMove();
-        computerMove();
-        
-    }
+	public  static void turnUntilWeGetWinner()
+	{
+		char symbol = ' ';
+
+		if(toss == 0)
+		{
+			userMove();
+			turn =1;
+		}
+		else
+		{
+			computerMove();
+			turn = 0;
+		}
+
+		boolean winnerFound = false;
+		while(winnerFound != true)
+		{
+			if(turn == 0)
+			{
+				userMove();
+				symbol = playerSymbol;
+			}
+			else
+			{
+				computerMove();
+				symbol = computerSymbol;
+			}
+			winnerFound = checkWinningCondition(symbol);
+		}
+		if(symbol==playerSymbol)
+		{
+			System.out.println("Player won");
+		}
+		else
+		{
+			System.out.println("Computer won");
+		}
+	}
+
+
+
+	public  static boolean  checkWinningCondition(char symbol)
+	{
+		boolean gotWinner = false;
+		if(board[1] == symbol && board[2]==symbol &&board[3]==symbol)
+		{
+			gotWinner =true;
+		}
+		if(board[4] == symbol && board[5]==symbol &&board[6]==symbol)
+		{
+			gotWinner =true;
+		}
+		if(board[7] == symbol && board[5]==symbol &&board[9]==symbol)
+		{
+			gotWinner =true;
+		}
+		if(board[1] == symbol && board[4]==symbol &&board[7]==symbol)
+		{
+			gotWinner =true;
+		}
+		if(board[2] == symbol && board[5]==symbol &&board[8]==symbol)
+		{
+			gotWinner =true;
+		}
+		if(board[3] == symbol && board[6]==symbol &&board[9]==symbol)
+		{
+			gotWinner =true;
+		}
+		if(board[1] == symbol && board[5]==symbol &&board[9]==symbol)
+		{
+			gotWinner =true;
+		}
+		if(board[3] == symbol && board[5]==symbol &&board[7]==symbol)
+		{
+			gotWinner =true;
+		}
+		return gotWinner;
+	}
+	public static void main(String args[]) {
+		System.out.println("Welcome to TicTacToe Board Game");
+		board = creatingBoard();
+		allowPlayerToChoose();
+		showBoard();
+		toss = doToss();
+		turnUntilWeGetWinner();
+	}
 }
