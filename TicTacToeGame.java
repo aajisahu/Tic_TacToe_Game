@@ -19,7 +19,7 @@ public class TicTacToeGame {
     }
 
     private static void allowPlayerToChoose() {
-        System.out.println("Enter X or O you want to choose");
+        System.out.println("Enter X or O you want to choose");//here we are checking the position if free then user can move
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
         player = input.charAt(0);
@@ -58,7 +58,7 @@ public class TicTacToeGame {
         int position = sc.nextInt();
         if(position>=1 && position <=9)
         {
-            if(board[position]==' ')
+            if(board[position]==' ') //here we are checking the position if free then computer can move
             {
                 board[position] = player;
                 showBoard();
