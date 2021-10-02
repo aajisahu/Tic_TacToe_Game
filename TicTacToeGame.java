@@ -136,6 +136,16 @@ public class TicTacToeGame {
 				symbol = computerSymbol;
 			}
 			winnerFound = checkWinningCondition(symbol);
+			
+			/*
+			 * if all the boards position are fill and no one win then its a tie
+			 */
+			if(board[1]!=' '  &&  board[2]!=' ' && board[3]!=' ' && board[4]!=' ' && board[5]!=' '&& board[6]!=' '&&
+                    board[7]!=' '&& board[8]!=' '&& board[9]!=' ' && winnerFound !=true)
+            {
+                System.out.println("It is a tie , no one won");
+                break;
+            }
 		}
 		if(symbol==playerSymbol)
 		{
